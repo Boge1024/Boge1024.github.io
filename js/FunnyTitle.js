@@ -12,6 +12,6 @@ document.addEventListener('visibilitychange', function () {
         document.title = '你终于找到我了！' + ' | ' + OriginTitle;
         titleTime = setTimeout(function () {
             document.title = OriginTitle;
-        }, 100);
+        }, 300);
     }
 });
