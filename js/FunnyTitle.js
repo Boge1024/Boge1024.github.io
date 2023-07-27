@@ -12,6 +12,6 @@
          document.title = '你终于找到我了！';
          titleTime = setTimeout(function () {
              document.title = OriginTitle;
-         }, 2000);
+         }, 10);
      }
  });
