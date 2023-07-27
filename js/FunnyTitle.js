@@ -9,7 +9,7 @@
      }
      else {
          // $('[rel="icon"]').attr('href', "/img/trhx2.png");
-         document.title = OriginTitle;
+         document.title = '你终于找到我了！';
          titleTime = setTimeout(function () {
              document.title = OriginTitle;
          }, 2000);
