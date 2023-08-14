@@ -23,17 +23,20 @@
     
 <link rel="stylesheet" href="/css/loader.css">
 
-    <meta name="description" content="数据解析在将网页数据爬下来后，我们需要对其进行数据解析，以得到想要的数据，以下均是用xpath解析的案例使用xpath方式解析需要先下载lxml安装包并导入。数据解析分为本地解析和联网解析，两种解析方式只有网页数据的来源不同，而定位数据的方式相同使用方法如下： 本地解析#1.添加解析器parser     parser &#x3D; etree.HTMLParser(encoding&#x3D;&#39;utf-8&amp;">
+    <meta name="description" content="数据解析 在将网页数据爬下来后，我们需要对其进行数据解析，以得到想要的数据，以下均是用xpath解析的案例 使用xpath方式解析需要先下载lxml安装包并导入。数据解析分为本地解析和联网解析，两种解析方式只有网页数据的来源不同，而定位数据的方式相同使用方法如下：  本地解析 #1.添加解析器parser     parser &#x3D; etree.HTMLParser(encoding&#x3D;&#39;utf-8&#39;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="爬虫笔记2——数据解析">
 <meta property="og:url" content="http://example.com/2023/07/27/spider2/index.html">
 <meta property="og:site_name" content="你终于找到我啦！">
-<meta property="og:description" content="数据解析在将网页数据爬下来后，我们需要对其进行数据解析，以得到想要的数据，以下均是用xpath解析的案例使用xpath方式解析需要先下载lxml安装包并导入。数据解析分为本地解析和联网解析，两种解析方式只有网页数据的来源不同，而定位数据的方式相同使用方法如下： 本地解析#1.添加解析器parser     parser &#x3D; etree.HTMLParser(encoding&#x3D;&#39;utf-8&amp;">
+<meta property="og:description" content="数据解析 在将网页数据爬下来后，我们需要对其进行数据解析，以得到想要的数据，以下均是用xpath解析的案例 使用xpath方式解析需要先下载lxml安装包并导入。数据解析分为本地解析和联网解析，两种解析方式只有网页数据的来源不同，而定位数据的方式相同使用方法如下：  本地解析 #1.添加解析器parser     parser &#x3D; etree.HTMLParser(encoding&#x3D;&#39;utf-8&#39;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/%E5%8F%8C%E9%A9%AC%E5%B0%BE.jpg">
 <meta property="article:published_time" content="2023-07-27T05:24:11.000Z">
-<meta property="article:modified_time" content="2023-08-07T08:13:24.887Z">
+<meta property="article:modified_time" content="2023-08-13T15:09:24.029Z">
 <meta property="article:author" content="Boge_1024">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="xpath">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/%E5%8F%8C%E9%A9%AC%E5%B0%BE.jpg">
     
@@ -179,6 +182,10 @@
 </div>
 
             
+    <div class="article-category wow slideInLeft">
+        <a class="article-category-link" href="/categories/Python/">Python</a>
+    </div>
+
 
         </div>
         <div class="hr-line"></div>
@@ -229,12 +236,14 @@ r = tree.xpath(&#39;//div&#39;)#定位所有div文件
             
         </div>
         <footer class="article-footer">
-            <a data-url="http://example.com/2023/07/27/spider2/" data-id="clkzhmcui00054kbp7kfn3qpx" data-title="爬虫笔记2——数据解析"
+            <a data-url="http://example.com/2023/07/27/spider2/" data-id="cllaujei20001k8bph9yxfobg" data-title="爬虫笔记2——数据解析"
                class="article-share-link">分享</a>
             
             
             
             
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xpath/" rel="tag">xpath</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
 
         </footer>
     </div>
@@ -275,7 +284,9 @@ r = tree.xpath(&#39;//div&#39;)#定位所有div文件
 
 
     
+
 </article>
+
 
 
 
@@ -303,11 +314,11 @@ r = tree.xpath(&#39;//div&#39;)#定位所有div文件
             </div>
             <div class="sidebar-state-category">
                 <div>分类</div>
-                <div class="sidebar-state-number">0</div>
+                <div class="sidebar-state-number">2</div>
             </div>
             <div class="sidebar-state-tag">
                 <div>标签</div>
-                <div class="sidebar-state-number">0</div>
+                <div class="sidebar-state-number">8</div>
             </div>
         </div>
         <div class="sidebar-social">
@@ -359,9 +370,23 @@ r = tree.xpath(&#39;//div&#39;)#定位所有div文件
     </div>
     
         
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a></li></ul>
+        </div>
+    </div>
+
 
     
         
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/requests/" style="font-size: 10px;">requests</a> <a href="/tags/scrapy/" style="font-size: 10px;">scrapy</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/%E5%BC%82%E6%AD%A5/" style="font-size: 10px;">异步</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 20px;">爬虫</a>
+        </div>
+    </div>
+
 
     
         
@@ -374,6 +399,7 @@ r = tree.xpath(&#39;//div&#39;)#定位所有div文件
 
 
     
+
 </aside>
 
                 
@@ -401,7 +427,7 @@ r = tree.xpath(&#39;//div&#39;)#定位所有div文件
                     41.2k
                     &nbsp;|&nbsp;
                     <span class="icon-coffee"></span>
-                    02:35
+                    02:34
                 </div>
             
             
@@ -432,11 +458,11 @@ r = tree.xpath(&#39;//div&#39;)#定位所有div文件
             </div>
             <div class="sidebar-state-category">
                 <div>分类</div>
-                <div class="sidebar-state-number">0</div>
+                <div class="sidebar-state-number">2</div>
             </div>
             <div class="sidebar-state-tag">
                 <div>标签</div>
-                <div class="sidebar-state-number">0</div>
+                <div class="sidebar-state-number">8</div>
             </div>
         </div>
         <div class="sidebar-social">

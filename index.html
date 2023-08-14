@@ -242,7 +242,7 @@
         
         <div class="post-cover-left">
             
-                <img data-src="/images/回眸一望.jpg" data-sizes="auto" alt="回眸一望" class="lazyload">
+                <img data-src="/images/回眸一望.jpg" data-sizes="auto" alt="c++学习笔记————基础编程" class="lazyload">
             
 
         </div>
@@ -250,17 +250,28 @@
             <div class="post-meta">
                 <a><span class="icon-calendar"></span>2023-07-31</a>
                 
-                    <a><span class="icon-pencil"></span>0 字</a>
+                    <a><span class="icon-pencil"></span>869 字</a>
                 
                 
-                    <a><span class="icon-clock"></span>1 分钟</a>
+                    <a><span class="icon-clock"></span>3 分钟</a>
                 
             </div>
-            <h2 class="post-title">回眸一望</h2>
+            <h2 class="post-title">c++学习笔记————基础编程</h2>
             <article class="post-article">
                 
-                    
+                    c++基础编程
+1.值传递，引用传递(地址传递)，指针传递
+值传递
+编译器会重新拷贝一份值传入函数的形参的值，两个值的地址不一样。
+引用传递(地址传递)
+传递的是对象值的地址，例int &e,将地址传入形参，形参和实参的地址一样，当形参的值改变后，实参的值也会改变。
+指针传递
+传递的是指向“值的地址”的指针，传入该指针后，可以通过指针访问指针所指向地址(变量，类，结构体)中的内容
+指针与引用(地址)传递类似，传指针也是传地址，区别是访问方式不同，以类举例：指针用->访问，引用用.访问
+调用方法时，值传递、引用传递传的参数是实参(变量、对象)，而指针传的是地址
 
+2.const 修饰
+const
                 
             </article>
         </div>
@@ -275,24 +286,37 @@
         
         <div class="post-cover-right">
             
-                <img data-src="/images/穷.jpg" data-sizes="auto" alt="c++学习笔记" class="lazyload">
+                <img data-src="/images/穷.jpg" data-sizes="auto" alt="c++学习笔记————核心编程" class="lazyload">
             
         </div>
         <div class="post-info">
             <div class="post-meta">
                 <a><span class="icon-calendar"></span>2023-07-31</a>
                 
-                    <a><span class="icon-pencil"></span>8k 字</a>
+                    <a><span class="icon-pencil"></span>7.1k 字</a>
                 
                 
-                    <a><span class="icon-clock"></span>33 分钟</a>
+                    <a><span class="icon-clock"></span>30 分钟</a>
                 
             </div>
-            <h2 class="post-title">c++学习笔记</h2>
+            <h2 class="post-title">c++学习笔记————核心编程</h2>
             <article class="post-article">
                 
-                    c++基础编程1.值传递，引用传递(地址传递)，指针传递值传递编译器会重新拷贝一份值传入函数的形参的值，两个值的地址不一样。引用传递(地址传递)传递的是对象值的地址，例int &amp;amp;e,将地址传入形参，形参和实参的地址一样，当形参的值改变后，实参的值也会改变。指针传递传递的是指向“值的地址”的指针，传入该指针后，可以通过指针访问指针所指向地址(变量，类，结构体)中的内容指针与引用(地址)传递类似，传指针也是传地址，区别是访问方式不同，以类举例：指针用-&amp;gt;访问，引用用.访问调用方法时，值传递、引用传递传的参数是实参(变量、对象)，而指针传的是地址
-2.const 修饰const在谁前面
+                    c++核心编程
+1.内存分区模型
+c++程序在执行时，将内存大方向划分为4个区域
+(1)代码区：存放函数体的所有的二进制代码(无注释)，操作系统进行管理。（共享,只读）
+(2)全局区：存放全局变量和静态变量以及常量
+
+//全局变量和static定义的局部变量都在全局区，const修饰的局部常量仍在不在全局区
+int a;
+int main(){
+    int b;
+    static int c;   //静态定义变量
+    const int d = 1;//定义的常量存放在常量区
+    cout<<(int)&a<<endl;
+    cout<<(int)&b<<endl;
+  
                 
             </article>
         </div>
@@ -325,9 +349,21 @@
             <h2 class="post-title">爬虫笔记5——scrapy框架</h2>
             <article class="post-article">
                 
-                    scrapy框架scrapy框架是Python封装了一些高频爬虫功能的框架，具体介绍如下
-scrapy框架（封装的高频功能）    1.高性能的持久化存储    2.异步的数据下载    3.高性能的数据解析    4.分布式                                 
-下载步骤    1.pip install wheel    2.下载twisted,下载地址为http://www.lfd.uci.edu/~gohlke/pyhonlibs/#twisted    3.安装twisted:pip install Twisted-17.1.0-cp36-cp36m-wi
+                    scrapy框架
+scrapy框架是Python封装了一些高频爬虫功能的框架，具体介绍如下
+
+scrapy框架（封装的高频功能）
+1.高性能的持久化存储
+2.异步的数据下载
+3.高性能的数据解析
+4.分布式 
+
+下载步骤
+1.pip install wheel
+2.下载twisted,下载地址为http://www.lfd.uci.edu/~gohlke/pyhonlibs/#twisted
+3.安装twisted:pip install Twisted-17.1.0-cp36-cp36m-win_amd64.whl
+4.pip install pywin32
+5.pip install sc
                 
             </article>
         </div>
@@ -358,13 +394,49 @@ scrapy框架（封装的高频功能）    1.高性能的持久化存储    2.�
             <h2 class="post-title">爬虫笔记4——selenium模块</h2>
             <article class="post-article">
                 
-                    selenium模块selenium模块:基于浏览器自动化的模块（解放双手，自动操作！！！）作用：
+                    selenium模块
+selenium模块:基于浏览器自动化的模块（解放双手，自动操作！！！）
+作用：
 
-便捷地获取网站中动态加载的数据(Ajax数据包——b站番剧名称获取)
-便捷实现模拟登录
+ 1. 便捷地获取网站中动态加载的数据(Ajax数据包——b站番剧名称获取)
+ 2. 便捷实现模拟登录
 
-selenium模块基本操作流程需要导入selenium import webdriver
-123456789101112131415161718192021222324252627282930from selenium import webdriver #浏览器自动化操作模块，需安装selenium包;要想操作浏览器，还需下载浏览器驱动程序import timefrom lxml import etre
+selenium模块基本操作流程
+需要导入selenium import webdriver
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+
+
+from selenium import webdriver #浏览器自动化操作模块，需安装selenium包;要想操作浏览器
                 
             </article>
         </div>
@@ -397,8 +469,34 @@ selenium模块基本操作流程需要导入selenium import webdriver
             <h2 class="post-title">爬虫笔记3——异步爬虫</h2>
             <article class="post-article">
                 
-                    异步爬虫在使用requests模块发起网络请求时，由于是单线程串行执行，爬取数据的效率会很低。我们可以采用线程池和异步爬虫的方式来提高爬取数据的性能，其中线程池使用简单但对cpu性能有要求，因此我们常使用异步爬虫来进行大量数据的爬取。
-单线程爬取数据代码示例（总耗时8s）12345678910111213141516#使用单线程串行方式执行(效率低)import timedef get_page(str):#获取url的方法    print(&amp;quot;正在下载:&amp;quot;,str)    time.sleep(2)#休眠两秒    print(&amp;quot;下载成功:&amp;quot;,str)
+                    异步爬虫
+在使用requests模块发起网络请求时，由于是单线程串行执行，爬取数据的效率会很低。我们可以采用线程池和异步爬虫的方式来提高爬取数据的性能，其中线程池使用简单但对cpu性能有要求，因此我们常使用异步爬虫来进行大量数据的爬取。
+
+单线程爬取数据代码示例（总耗时8s）
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+
+
+#使用单线程串行方式执行(效率低)
+import time
+def get_page(str):#获取url的方法
+    print("正在下载:",str)
+    time.sleep(2)#休眠两秒
+    print("下载成功:
                 
             </article>
         </div>
@@ -429,12 +527,19 @@ selenium模块基本操作流程需要导入selenium import webdriver
             <h2 class="post-title">爬虫笔记2——数据解析</h2>
             <article class="post-article">
                 
-                    数据解析在将网页数据爬下来后，我们需要对其进行数据解析，以得到想要的数据，以下均是用xpath解析的案例使用xpath方式解析需要先下载lxml安装包并导入。数据解析分为本地解析和联网解析，两种解析方式只有网页数据的来源不同，而定位数据的方式相同使用方法如下：
-本地解析#1.添加解析器parser
-    parser = etree.HTMLParser(encoding=&amp;#39;utf-8&amp;#39;)
+                    数据解析
+在将网页数据爬下来后，我们需要对其进行数据解析，以得到想要的数据，以下均是用xpath解析的案例
+使用xpath方式解析需要先下载lxml安装包并导入。数据解析分为本地解析和联网解析，两种解析方式只有网页数据的来源不同，而定位数据的方式相同使用方法如下：
+
+本地解析
+#1.添加解析器parser
+    parser = etree.HTMLParser(encoding='utf-8')
 
 #2.实例化好一个etree对象，且将被解析的源码(当前目录的html文件)加载到该对象中
-    tree = etree.HTML(&amp;#39;美女图片.html&amp;#39;,parse
+    tree = etree.HTML('美女图片.html',parser=parser)
+
+
+
                 
             </article>
         </div>
@@ -467,8 +572,15 @@ selenium模块基本操作流程需要导入selenium import webdriver
             <h2 class="post-title">爬虫笔记1——requests模块</h2>
             <article class="post-article">
                 
-                    requests模块爬虫就是程序模拟人的行为去访问各个网站，帮我们抓取所需要的数据，最后再进行相应的持久化存储。通用爬虫——获取整张网页的数据聚焦爬虫——获取网页指定部分数据增量爬虫——获取网页更新的数据requests是爬虫的一种同步网络请求模块，爬虫文件可以通过requests对指定的url发起网络请求，一般分为两种请求：get请求获取数据，post请求提交数据（带参数）。成功提交请求后会返回响应对象，我们可以通过响应对象去获取解析该url的各种信息。
-案例1：获取彼岸图网整张网页数据（通用爬虫）首先需要下载安装requests模块并导入，随后通过requests模块来访问获取彼岸图网的整
+                    requests模块
+爬虫就是程序模拟人的行为去访问各个网站，帮我们抓取所需要的数据，最后再进行相应的持久化存储。
+通用爬虫——获取整张网页的数据
+聚焦爬虫——获取网页指定部分数据
+增量爬虫——获取网页更新的数据
+requests是爬虫的一种同步网络请求模块，爬虫文件可以通过requests对指定的url发起网络请求，一般分为两种请求：get请求获取数据，post请求提交数据（带参数）。成功提交请求后会返回响应对象，我们可以通过响应对象去获取解析该url的各种信息。
+
+案例1：获取彼岸图网整张网页数据（通用爬虫）
+首先需要下载安装requests模块并导入，随后通过requests模块来访问获
                 
             </article>
         </div>
@@ -500,12 +612,22 @@ selenium模块基本操作流程需要导入selenium import webdriver
             <article class="post-article">
                 
                     Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post
-1$ hexo new &amp;quot;My New Post&amp;quot;
+
+Quick Start
+Create a new post
+1
+
+
+$ hexo new "My New Post"
 
 
 More info: Writing
-Run server1$ hexo s
+
+Run server
+1
+
+
+$ hexo s
                 
             </article>
         </div>
@@ -538,11 +660,11 @@ src="https://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
             </div>
             <div class="sidebar-state-category">
                 <div>分类</div>
-                <div class="sidebar-state-number">0</div>
+                <div class="sidebar-state-number">2</div>
             </div>
             <div class="sidebar-state-tag">
                 <div>标签</div>
-                <div class="sidebar-state-number">0</div>
+                <div class="sidebar-state-number">8</div>
             </div>
         </div>
         <div class="sidebar-social">
@@ -594,9 +716,23 @@ src="https://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
     </div>
     
         
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a></li></ul>
+        </div>
+    </div>
+
 
     
         
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/requests/" style="font-size: 10px;">requests</a> <a href="/tags/scrapy/" style="font-size: 10px;">scrapy</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/%E5%BC%82%E6%AD%A5/" style="font-size: 10px;">异步</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 20px;">爬虫</a>
+        </div>
+    </div>
+
 
     
         
@@ -609,6 +745,7 @@ src="https://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
 
 
     
+
 </aside>
 
                 
@@ -636,7 +773,7 @@ src="https://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
                     41.2k
                     &nbsp;|&nbsp;
                     <span class="icon-coffee"></span>
-                    02:35
+                    02:34
                 </div>
             
             
@@ -667,11 +804,11 @@ src="https://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
             </div>
             <div class="sidebar-state-category">
                 <div>分类</div>
-                <div class="sidebar-state-number">0</div>
+                <div class="sidebar-state-number">2</div>
             </div>
             <div class="sidebar-state-tag">
                 <div>标签</div>
-                <div class="sidebar-state-number">0</div>
+                <div class="sidebar-state-number">8</div>
             </div>
         </div>
         <div class="sidebar-social">
