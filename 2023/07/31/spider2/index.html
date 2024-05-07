@@ -1,0 +1,589 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-CN"
+            
+          
+    >
+    <head>
+    <meta charset="utf-8">
+    
+
+    
+
+    
+    <title>
+        爬虫笔记2——数据解析 |
+        
+        你终于找到我啦！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CUbuntu%20Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+    
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/v4-font-face.min.css">
+
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+    <meta name="description" content="数据解析 在将网页数据爬下来后，我们需要对其进行数据解析，以得到想要的数据，以下均是用xpath解析的案例 使用xpath方式解析需要先下载lxml安装包并导入。数据解析分为本地解析和联网解析，两种解析方式只有网页数据的来源不同，而定位数据的方式相同使用方法如下：  本地解析 #1.添加解析器parser     parser &#x3D; etree.HTMLParser(encoding&#x3D;&#39;utf-8&#39;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫笔记2——数据解析">
+<meta property="og:url" content="http://example.com/2023/07/31/spider2/index.html">
+<meta property="og:site_name" content="你终于找到我啦！">
+<meta property="og:description" content="数据解析 在将网页数据爬下来后，我们需要对其进行数据解析，以得到想要的数据，以下均是用xpath解析的案例 使用xpath方式解析需要先下载lxml安装包并导入。数据解析分为本地解析和联网解析，两种解析方式只有网页数据的来源不同，而定位数据的方式相同使用方法如下：  本地解析 #1.添加解析器parser     parser &#x3D; etree.HTMLParser(encoding&#x3D;&#39;utf-8&#39;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/%E5%8F%8C%E9%A9%AC%E5%B0%BE.jpg">
+<meta property="article:published_time" content="2023-07-31T05:24:11.000Z">
+<meta property="article:modified_time" content="2024-05-07T13:36:38.507Z">
+<meta property="article:author" content="Boge_1024">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="xpath">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/%E5%8F%8C%E9%A9%AC%E5%B0%BE.jpg">
+    
+        <link rel="alternate" href="/atom.xml" title="你终于找到我啦！" type="application/atom+xml">
+    
+    
+        <link rel="shortcut icon" href="/images/zero.ico">
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/typeface-source-code-pro@1.1.13/index.css">
+
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+    
+    
+    
+    
+    
+<script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script>
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/wowjs@1.1.3/css/libs/animate.css">
+
+        
+<script src="https://unpkg.com/wowjs@1.1.3/dist/wow.min.js"></script>
+
+        <script>
+          new WOW({
+            offset: 0,
+            mobile: true,
+            live: false
+          }).init();
+        </script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+    <body>
+    
+<div id='loader'>
+  <div class="loading-left-bg"></div>
+  <div class="loading-right-bg"></div>
+  <div class="spinner-box">
+    <div class="loading-taichi">
+      <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+      <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+      <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+      <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+    </svg>
+    </div>
+    <div class="loading-word">少女祈祷中...</div>
+  </div>
+</div>
+</div>
+
+<script>
+  const endLoading = function() {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('load', endLoading);
+  document.getElementById('loader').addEventListener('click', endLoading);
+</script>
+
+
+    <div id="container">
+        <div id="wrap">
+            <header id="header">
+    
+        <img data-src="/images/双马尾.jpg" data-sizes="auto" alt="爬虫笔记2——数据解析" class="lazyload">
+    
+    <div id="header-outer" class="outer">
+        <div id="header-title" class="inner">
+            <div id="logo-wrap">
+                
+                    
+                    
+                        <a href="/" id="logo"><h1>爬虫笔记2——数据解析</h1></a>
+                    
+                
+            </div>
+            
+                
+                
+            
+        </div>
+        <div id="header-inner">
+            <nav id="main-nav">
+                <a id="main-nav-toggle" class="nav-icon"></a>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/">首页</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/archives">归档</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/about">关于</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/friend">友链</a>
+                    </span>
+                
+            </nav>
+            <nav id="sub-nav">
+                
+                    <a id="nav-rss-link" class="nav-icon" href="/atom.xml"
+                       title="RSS 订阅"></a>
+                
+                
+            </nav>
+            <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <div id="content" class="outer">
+                <section id="main"><article id="post-spider2" class="h-entry article article-type-post"
+         itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <div class="article-inner">
+        <div class="article-meta">
+            <div class="article-date wow slideInLeft">
+    <a href="/2023/07/31/spider2/" class="article-date-link">
+        <time datetime="2023-07-31T05:24:11.000Z"
+              itemprop="datePublished">2023-07-31</time>
+    </a>
+</div>
+
+            
+    <div class="article-category wow slideInLeft">
+        <a class="article-category-link" href="/categories/Python/">Python</a>
+    </div>
+
+
+        </div>
+        <div class="hr-line"></div>
+        
+
+        <div class="e-content article-entry" itemprop="articleBody">
+            
+                <h1 id="数据解析"><a href="#数据解析" class="headerlink" title="数据解析"></a>数据解析</h1><p>在将网页数据爬下来后，我们需要对其进行数据解析，以得到想要的数据，以下均是用xpath解析的案例<br><strong>使用xpath方式解析需要先下载lxml安装包并导入</strong>。数据解析分为本地解析和联网解析，两种解析方式只有网页数据的来源不同，而定位数据的方式相同使用方法如下：</p>
+<h3 id="本地解析"><a href="#本地解析" class="headerlink" title="本地解析"></a>本地解析</h3><pre><code>#1.添加解析器parser
+    parser = etree.HTMLParser(encoding=&#39;utf-8&#39;)
+
+#2.实例化好一个etree对象，且将被解析的源码(当前目录的html文件)加载到该对象中
+    tree = etree.HTML(&#39;美女图片.html&#39;,parser=parser)
+</code></pre>
+<h3 id="联网解析"><a href="#联网解析" class="headerlink" title="联网解析"></a>联网解析</h3><pre><code>#指定url发起请求，并返回网页数据
+page_text = requests.get(url=url,headers=headers).content
+
+#加载数据并对数据进行解析
+tree = etree.HTML(page_text)
+</code></pre>
+<h3 id="数据定位"><a href="#数据定位" class="headerlink" title="数据定位"></a>数据定位</h3><p>以<a target="_blank" rel="noopener" href="http://pic.netbian.com/4kmeinv/index.html">彼岸图网</a>为例<br>1.&#x2F;&#x2F;表示多个层级,也表示可以从任意位置开始进行标签定位，以下三种xpath表达形式相同</p>
+<pre><code>r = tree.xpath(&#39;/html/head/div&#39;)
+r = tree.xpath(&#39;/html//div&#39;)
+r = tree.xpath(&#39;//div&#39;)#定位所有div文件
+</code></pre>
+<p>2.xpath返回的都是列表，需要在后边加[0]取出其中的元素</p>
+<p>(1)属性定位：中括号[]内的为属性定位，定位到class属性为c-img c-img-radius-large  c-img3 compatible_rxApe的div标签</p>
+<pre><code>r = tree.xpath(&#39;//div[@class=&quot;c-img c-img-radius-large  c-img3 compatible_rxApe&quot;]&#39;)
+</code></pre>
+<p>(2)索引定位：定位到指定div标签下的第三个p标签，xpath的索引是从“1”开始的！</p>
+<pre><code> r = tree.xpath(&#39;//div[@class=&quot;c-img c-img-radius-large  c-img3 compatible_rxApe&quot;]/p[3]&#39;)
+</code></pre>
+<p>(3)取文本:&#x2F;text()获取该标签的直系内容(只包含该标签的内容，不包括子标签)，为列表，如要取得字符串，需要在后边再加[0]获取列表中的元素，&#x2F;&#x2F;text()获取该标签的所有内容（包括子标签中的内容）</p>
+<pre><code>r = tree.xpath(&#39;//div[@class=&quot;c-img c-img-radius-large  c-img3 compatible_rxApe&quot;]/p[3]/text()&#39;)[0]
+</code></pre>
+<p>(4)取属性值：&#x2F;@属性名（在直系标签里取属性）</p>
+<pre><code>r = tree.xpath(&#39;//@class&#39;)
+</code></pre>
+<p>(5)xpath表达式可用’|’符号来扩大tree.xpath()的解析范围</p>
+<pre><code>r = tree.xpath(&#39;//@class&#39; | &#39;//div[@class=&quot;c-img c-img-radius-large  c-img3 compatible_rxApe&quot;]&#39;)
+</code></pre>
+<h2 id="案例1：获取58二手房的数据（聚焦爬虫）"><a href="#案例1：获取58二手房的数据（聚焦爬虫）" class="headerlink" title="案例1：获取58二手房的数据（聚焦爬虫）"></a>案例1：获取58二手房的数据（聚焦爬虫）</h2><h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">from lxml import etree</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="comment">#UA伪装</span></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Safari/537.36&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#指定url</span></span><br><span class="line">    url = <span class="string">&#x27;https://sh.58.com/ershoufang/&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#1.发起请求并返回响应数据</span></span><br><span class="line">    response = requests.get(url=url,headers=headers)</span><br><span class="line">    page_text = response.text</span><br><span class="line">    <span class="built_in">print</span>(response.status_code)<span class="comment">#获取网络请求码，若返回200则请求成功</span></span><br><span class="line">    <span class="comment"># print(page_text)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#2.数据解析</span></span><br><span class="line">    tree = etree.HTML(page_text)</span><br><span class="line">    <span class="comment">#存储div标签对象</span></span><br><span class="line">    div_list = tree.xpath(<span class="string">&#x27;//section[@class=&quot;list-main&quot;]/section[@class=&quot;list_left&quot;]/section[@class=&quot;list&quot;]/div&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(div_list)</span><br><span class="line">    <span class="comment">#循环获取每个div标签中对应所需的数据</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#3.持久化存储</span></span><br><span class="line">    fp = open(<span class="string">&#x27;58二手房.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> div <span class="keyword">in</span> div_list:</span><br><span class="line">        temp = div.xpath(<span class="string">&#x27;.//div[@class=&quot;property-content-title&quot;]/h3/text()&#x27;</span>)[0]</span><br><span class="line">        fp.write(temp+<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    fp.close()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;爬取结束！&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例2：获取b站番剧索引页的番剧封面和名称（聚焦爬虫）"><a href="#案例2：获取b站番剧索引页的番剧封面和名称（聚焦爬虫）" class="headerlink" title="案例2：获取b站番剧索引页的番剧封面和名称（聚焦爬虫）"></a>案例2：获取b站番剧索引页的番剧封面和名称（聚焦爬虫）</h2><h3 id="完整代码-1"><a href="#完整代码-1" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">import requests         <span class="comment">#请求模块</span></span><br><span class="line">from lxml import etree  <span class="comment">#xpath模块</span></span><br><span class="line">import os               <span class="comment">#文件夹模块</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    cnt = 1<span class="comment">#计数器</span></span><br><span class="line">	<span class="comment">#UA伪装</span></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.125 Safari/537.36 QIHU 360SE&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#1.获取页面源码数据(用for循环来获取分页数据)</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(1,70):</span><br><span class="line">        <span class="keyword">if</span> i==1:</span><br><span class="line">            url = <span class="string">&#x27;http://pic.netbian.com/4kmeinv&#x27;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            url = <span class="string">&#x27;http://pic.netbian.com/4kmeinv/index_&#x27;</span>+str(i)+<span class="string">&#x27;.html&#x27;</span></span><br><span class="line">        page_text = requests.get(url=url,headers=headers).content</span><br><span class="line">        </span><br><span class="line">    <span class="comment">#2.加载数据并对数据进行解析</span></span><br><span class="line">        tree = etree.HTML(page_text)</span><br><span class="line"></span><br><span class="line">        <span class="comment">#获取所有li标签</span></span><br><span class="line">        li_list = tree.xpath(<span class="string">&#x27;//ul[@class=&quot;clearfix&quot;]/li&#x27;</span>)</span><br><span class="line">        <span class="comment"># print(li_list)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#创建一个文件夹,如果当前路径下不存在pic文件夹则创建该文件夹</span></span><br><span class="line">        <span class="keyword">if</span> not os.path.exists(<span class="string">&#x27;pic&#x27;</span>): <span class="comment">#用os.path.exists()方法来判断是否存在文件夹</span></span><br><span class="line">            os.mkdir(<span class="string">&#x27;pic&#x27;</span>)   <span class="comment">#用os.mkdir()方法来创建文件夹</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#遍历li标签获取其中所有的src属性值(图片路径和名称),并进行请求，将请求到的数据存储当文件夹中</span></span><br><span class="line">        <span class="keyword">for</span> li <span class="keyword">in</span> li_list:</span><br><span class="line">            temp_li = <span class="string">&#x27;http://pic.netbian.com/&#x27;</span> + li.xpath(<span class="string">&#x27;./a/img/@src&#x27;</span>)[0]<span class="comment">#xpath路径返回的也是列表，需要取其中第1个元素</span></span><br><span class="line">            <span class="comment"># 若出现中文乱码，可添加temp_alt.encode(&#x27;iso-8859-1&#x27;).encode(&#x27;gbk&#x27;)解决</span></span><br><span class="line">            temp_alt = li.xpath(<span class="string">&#x27;./a/img/@alt&#x27;</span>)[0]+<span class="string">&#x27;.jpg&#x27;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 遍历src列表，对其进行get请求获取图片数据</span></span><br><span class="line">            img = requests.get(temp_li, headers=headers).content</span><br><span class="line">    <span class="comment">#3.持久化存储</span></span><br><span class="line">            fileName = <span class="string">&#x27;./pic/&#x27;</span> + temp_alt</span><br><span class="line">            <span class="keyword">if</span> not os.path.exists(fileName):</span><br><span class="line">                with open(fileName, <span class="string">&#x27;wb&#x27;</span>) as fp:</span><br><span class="line">                    fp.write(img)</span><br><span class="line">                <span class="built_in">print</span>(str(cnt)+<span class="string">&quot; &quot;</span>+temp_alt+<span class="string">&quot;获取成功！&quot;</span>)</span><br><span class="line">                cnt = cnt+1</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;爬取完成！&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%8C%E9%A9%AC%E5%B0%BE.jpg"></p>
+
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://example.com/2023/07/31/spider2/" data-id="cllaujei20001k8bph9yxfobg" data-title="爬虫笔记2——数据解析"
+               class="article-share-link">分享</a>
+            
+            
+            
+            
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xpath/" rel="tag">xpath</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </footer>
+    </div>
+    
+        
+    <nav id="article-nav" class="wow fadeInUp">
+        
+            <div class="article-nav-link-wrap article-nav-link-left">
+                
+                    <img data-src="/images/享受宁静.jpg" data-sizes="auto" alt="爬虫笔记3——异步爬虫"
+                         class="lazyload">
+                
+                <a href="/2023/08/04/spider3/"></a>
+                <div class="article-nav-caption">前一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        爬虫笔记3——异步爬虫
+                    
+                </h3>
+            </div>
+        
+        
+            <div class="article-nav-link-wrap article-nav-link-right">
+                
+                    <img data-src="/images/望眼欲穿.jpg" data-sizes="auto" alt="爬虫笔记1——requests模块"
+                         class="lazyload">
+                
+                <a href="/2023/07/26/spider1/"></a>
+                <div class="article-nav-caption">后一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        爬虫笔记1——requests模块
+                    
+                </h3>
+            </div>
+        
+    </nav>
+
+
+    
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+                
+                    <aside id="sidebar">
+    <div class="sidebar-wrap wow fadeInRight">
+        <div class="sidebar-author">
+            <img data-src="/avatar//avatar.jpg" data-sizes="auto" alt="Boge_1024" class="lazyload">
+            <div class="sidebar-author-name">Boge_1024</div>
+            <div class="sidebar-description">呐，我说，你有在偷看罢？</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">12</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">2</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">11</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/Boge1024 itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-google>
+                    <a href=https://plus.google.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-twitter>
+                    <a href=https://twitter.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-facebook>
+                    <a href=https://www.facebook.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a></li></ul>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SSM/" style="font-size: 10px;">SSM</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/requests/" style="font-size: 10px;">requests</a> <a href="/tags/scrapy/" style="font-size: 10px;">scrapy</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/%E5%BC%82%E6%AD%A5/" style="font-size: 10px;">异步</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 20px;">爬虫</a>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a></li></ul>
+        </div>
+    </div>
+
+
+    
+
+</aside>
+
+                
+            </div>
+            <footer id="footer" class="wow fadeInUp">
+    <div style="width: 100%; overflow: hidden"><div class="footer-line"></div></div>
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            
+            <div>
+                <span class="icon-copyright"></span>
+                2023-2024
+                <span class="footer-info-sep"></span>
+                Boge_1024
+            </div>
+            
+                <div>
+                    基于&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;
+                    Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" target="_blank">Reimu</a>
+                </div>
+            
+            
+                <div>
+                    <span class="icon-brush"></span>
+                    62.8k
+                    &nbsp;|&nbsp;
+                    <span class="icon-coffee"></span>
+                    03:51
+                </div>
+            
+            
+                <div>
+                    <span class="icon-eye"></span>
+                    <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+                    &nbsp;|&nbsp;
+                    <span class="icon-user"></span>
+                    <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+                </div>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+        <nav id="mobile-nav">
+    <div class="sidebar-wrap">
+        <div class="sidebar-author">
+            <img data-src="/avatar//avatar.jpg" data-sizes="auto" alt="Boge_1024" class="lazyload">
+            <div class="sidebar-author-name">Boge_1024</div>
+            <div class="sidebar-description">呐，我说，你有在偷看罢？</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">12</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">2</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">11</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/Boge1024 itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-google>
+                    <a href=https://plus.google.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-twitter>
+                    <a href=https://twitter.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-facebook>
+                    <a href=https://www.facebook.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+
+        
+<script src="https://unpkg.com/jquery@3.7.0/dist/jquery.min.js"></script>
+
+
+<script src="https://unpkg.com/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+    
+<script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+
+    
+<script src="https://unpkg.com/busuanzi@2.3.0/bsz.pure.mini.js"></script>
+
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="site-search">
+        <div class="algolia-popup popup">
+            <div class="algolia-search">
+                <span class="algolia-search-input-icon"></span>
+                <div class="algolia-search-input" id="algolia-search-input"></div>
+            </div>
+
+            <div class="algolia-results">
+                <div id="algolia-stats"></div>
+                <div id="algolia-hits"></div>
+                <div id="algolia-pagination" class="algolia-pagination"></div>
+            </div>
+
+            <span class="popup-btn-close"></span>
+        </div>
+    </div>
+    <!-- hexo injector body_end start -->
+<script src="/js/insertHighlight.js"></script>
+<!-- hexo injector body_end end --></body>
+    </html>
+
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<!-- 高级看板娘 -->
+<script src="/live2d-widget/autoload.js"></script>

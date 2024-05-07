@@ -1,0 +1,565 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-CN"
+            
+          
+    >
+    <head>
+    <meta charset="utf-8">
+    
+
+    
+
+    
+    <title>
+        爬虫笔记5——scrapy框架 |
+        
+        你终于找到我啦！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CUbuntu%20Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+    
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free/css/v4-font-face.min.css">
+
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+    <meta name="description" content="scrapy框架 scrapy框架是Python封装了一些高频爬虫功能的框架，具体介绍如下  scrapy框架（封装的高频功能） 1.高性能的持久化存储 2.异步的数据下载 3.高性能的数据解析 4.分布式   下载步骤 1.pip install wheel 2.下载twisted,下载地址为http:&#x2F;&#x2F;www.lfd.uci.edu&#x2F;~gohlke&#x2F;pyhonlibs&#x2F;#twisted 3.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫笔记5——scrapy框架">
+<meta property="og:url" content="http://example.com/2023/08/14/spider5/index.html">
+<meta property="og:site_name" content="你终于找到我啦！">
+<meta property="og:description" content="scrapy框架 scrapy框架是Python封装了一些高频爬虫功能的框架，具体介绍如下  scrapy框架（封装的高频功能） 1.高性能的持久化存储 2.异步的数据下载 3.高性能的数据解析 4.分布式   下载步骤 1.pip install wheel 2.下载twisted,下载地址为http:&#x2F;&#x2F;www.lfd.uci.edu&#x2F;~gohlke&#x2F;pyhonlibs&#x2F;#twisted 3.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/%E5%87%BA%E6%B0%B4%E8%8A%99%E8%93%89.jpg">
+<meta property="article:published_time" content="2023-08-14T00:24:11.000Z">
+<meta property="article:modified_time" content="2024-05-07T13:37:21.500Z">
+<meta property="article:author" content="Boge_1024">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="scrapy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/%E5%87%BA%E6%B0%B4%E8%8A%99%E8%93%89.jpg">
+    
+        <link rel="alternate" href="/atom.xml" title="你终于找到我啦！" type="application/atom+xml">
+    
+    
+        <link rel="shortcut icon" href="/images/zero.ico">
+    
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/typeface-source-code-pro@1.1.13/index.css">
+
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+    
+    
+    
+    
+    
+<script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script>
+
+    
+        
+<link rel="stylesheet" href="https://unpkg.com/wowjs@1.1.3/css/libs/animate.css">
+
+        
+<script src="https://unpkg.com/wowjs@1.1.3/dist/wow.min.js"></script>
+
+        <script>
+          new WOW({
+            offset: 0,
+            mobile: true,
+            live: false
+          }).init();
+        </script>
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+    <body>
+    
+<div id='loader'>
+  <div class="loading-left-bg"></div>
+  <div class="loading-right-bg"></div>
+  <div class="spinner-box">
+    <div class="loading-taichi">
+      <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+      <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+      <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+      <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+    </svg>
+    </div>
+    <div class="loading-word">少女祈祷中...</div>
+  </div>
+</div>
+</div>
+
+<script>
+  const endLoading = function() {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loader').classList.add("loading");
+  }
+  window.addEventListener('load', endLoading);
+  document.getElementById('loader').addEventListener('click', endLoading);
+</script>
+
+
+    <div id="container">
+        <div id="wrap">
+            <header id="header">
+    
+        <img data-src="/images/出水芙蓉.jpg" data-sizes="auto" alt="爬虫笔记5——scrapy框架" class="lazyload">
+    
+    <div id="header-outer" class="outer">
+        <div id="header-title" class="inner">
+            <div id="logo-wrap">
+                
+                    
+                    
+                        <a href="/" id="logo"><h1>爬虫笔记5——scrapy框架</h1></a>
+                    
+                
+            </div>
+            
+                
+                
+            
+        </div>
+        <div id="header-inner">
+            <nav id="main-nav">
+                <a id="main-nav-toggle" class="nav-icon"></a>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/">首页</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/archives">归档</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/about">关于</a>
+                    </span>
+                
+                    <span class="main-nav-link-wrap">
+                        <span class="main-nav-icon"></span>
+                        <a class="main-nav-link" href="/friend">友链</a>
+                    </span>
+                
+            </nav>
+            <nav id="sub-nav">
+                
+                    <a id="nav-rss-link" class="nav-icon" href="/atom.xml"
+                       title="RSS 订阅"></a>
+                
+                
+            </nav>
+            <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+            </div>
+        </div>
+    </div>
+</header>
+
+            <div id="content" class="outer">
+                <section id="main"><article id="post-spider5" class="h-entry article article-type-post"
+         itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <div class="article-inner">
+        <div class="article-meta">
+            <div class="article-date wow slideInLeft">
+    <a href="/2023/08/14/spider5/" class="article-date-link">
+        <time datetime="2023-08-14T00:24:11.000Z"
+              itemprop="datePublished">2023-08-14</time>
+    </a>
+</div>
+
+            
+    <div class="article-category wow slideInLeft">
+        <a class="article-category-link" href="/categories/Python/">Python</a>
+    </div>
+
+
+        </div>
+        <div class="hr-line"></div>
+        
+
+        <div class="e-content article-entry" itemprop="articleBody">
+            
+                <h1 id="scrapy框架"><a href="#scrapy框架" class="headerlink" title="scrapy框架"></a>scrapy框架</h1><p>scrapy框架是Python封装了一些高频爬虫功能的框架，具体介绍如下</p>
+<p>scrapy框架（封装的高频功能）<br>    1.高性能的持久化存储<br>    2.异步的数据下载<br>    3.高性能的数据解析<br>    4.分布式                                 </p>
+<p>下载步骤<br>    1.pip install wheel<br>    2.下载twisted,下载地址为<a target="_blank" rel="noopener" href="http://www.lfd.uci.edu/~gohlke/pyhonlibs/#twisted">http://www.lfd.uci.edu/~gohlke/pyhonlibs/#twisted</a><br>    3.安装twisted:pip install Twisted-17.1.0-cp36-cp36m-win_amd64.whl<br>    4.pip install pywin32<br>    5.pip install scrapy</p>
+<h2 id="一、基本操作（在pycharm下方的终端页输入"><a href="#一、基本操作（在pycharm下方的终端页输入" class="headerlink" title="一、基本操作（在pycharm下方的终端页输入)"></a>一、基本操作（在pycharm下方的终端页输入)</h2><p>(1)创建一个工程<br>    scrapy startproject projectName<br>    (2)cd到projectName文件的子目录(有spiders文件夹的上级目录)<br>(3)在工程的spiders子目录中创建一个爬虫文件<br>        scrapy genspider spiderName <a target="_blank" rel="noopener" href="http://www.xxx.com/">www.xxx.com</a><br>    (4)将spiders同目录下的ROBOTSTXT_OBEY 属性改为False(不遵从robot协议)<br>并增添一行 LOG_LEVEL &#x3D; ‘ERROR’ ,只打印错误的日志信息，且可以指定其中的USER—AGENT<br>    (5)执行工程<br>    scrapy crawl spiderName<br>    (6)数据解析<br>  基于xpath进行解析：<br>  1.xpath返回的是列表，但是列表元素一定是Selector类型的对象<br>  2.某个元素调用extract()方法，可以将Selector对象中data参数存储的字符串提取出来<br>  3.某个列表调用extract()方法，可以将列表中所有Selector对象中data参数存储的字符串提取出来<br>  4.随后调用join():连接字符串数组，将列表中的字符串都连接成一个新的字符串<br>  5.变量没有提示可调用方法，可以先查看变量的类型，并在其后边注释类型信息，注释后即可调用<br>    (7)持久化存储<br>      基于终端指令：只可以将parse方法的返回值存储到本地的文本文件中<br>          scrapy crawl spiderName -o .&#x2F;filename  将执行工程的返回数据存入当前目录的文件中<br>          且文件类型只能为’json’, ‘jsonlines’, ‘jsonl’, ‘jl’, ‘csv’, ‘xml’, ‘marshal’, ‘pickle’<br>      基于管道：<br>        1.数据解析<br>        2.在item类中定义相关的属性<br>        3.将解析到的数据封装存储到item类型的实例化对象，将item类型的实例化对象提交给管道  yield item<br>        4.在管道类pipelines的process_item方法中，将接收到的item对象中存储的数据，进行持久化存储操作<br>            -继承只执行一次的打开文件和关闭文件方法<br>            -在process_item方法中向打开的文件写入数据<br>        5.在配置文件中，开启管道（解除以下代码的注释）<br>            ITEM_PIPELINES &#x3D; {<br>           “mn_pic.pipelines.MnPicPipeline”: 300,<br>            }</p>
+<h2 id="二、基于Spider的全站数据爬取"><a href="#二、基于Spider的全站数据爬取" class="headerlink" title="二、基于Spider的全站数据爬取"></a>二、基于Spider的全站数据爬取</h2><p>将网站某版块下的全部页码对应的页面数据进行爬取<br>方法：进行手动请求的发送 yield scrapy.Request(url&#x3D;要发送请求的url,callback&#x3D;回调的方法(如self.parse)) callback专门用作于数据解析</p>
+<h2 id="三、五大核心组件"><a href="#三、五大核心组件" class="headerlink" title="三、五大核心组件"></a>三、五大核心组件</h2><p>（1）引擎（Scrapy）<br>    用来处理整个系统的数据流处理，触发事务（框架核心）<br>（2）调度器（Scheduler）<br>    用来接收引擎发过来的请求，压入队列中，并在引擎再次请求的时候返回。<br>（3）下载器（Downloader）<br>    用于下载网页内容，并将网页内容返回给蜘蛛（Scrapy下载器是建立在twisted这个高效的异步模型上的）<br>（4）爬虫（Spider）<br>    从特定网页提取自己需要的信息，即所谓的实体(Item)<br>（5）项目管道（Pipeline）<br>    负责处理爬虫从网页中抽取的实体，主要的功能是持久化存储实体中的有效信息</p>
+<h2 id="四、请求传参-案例nm-pic"><a href="#四、请求传参-案例nm-pic" class="headerlink" title="四、请求传参 案例nm_pic"></a>四、请求传参 案例nm_pic</h2><ul>
+<li>使用场景: 如果爬取解析的数据不在同一张页面中（有详情页）。（深度爬取）</li>
+<li>实现方法:<br>(1)在主文件中实现一个新的方法 def parse_detail(self,response)<br>(2)将parse中获取的url通过手动请求的发送将url发送到新的方法parse_detail中<br>   yield scrapy.Request(url&#x3D;new_url,callback&#x3D;parse_detail)<br>(3)在parse方法中实例化item对象，并将item对象传给parse_detail方法中（即请求传参）,在上行代码中添加meta参数<br>   yield scrapy.Request(url&#x3D;new_url,callback&#x3D;parse_detail,meta&#x3D;{‘item’: item})<br>(4)回调方法parse_detail通过response.meta[‘item’]来接收item<br>   item &#x3D; response.meta[‘item’]<br>(5)将回调方法中解析的数据存入接收到的item中，并将item提交至管道,在setting中开启管道<br>   yield item</li>
+</ul>
+<h2 id="五、图片数据爬取之ImagesPipeline（图片二进制数据封装管道类）-案例zzpic"><a href="#五、图片数据爬取之ImagesPipeline（图片二进制数据封装管道类）-案例zzpic" class="headerlink" title="五、图片数据爬取之ImagesPipeline（图片二进制数据封装管道类）  案例zzpic"></a>五、图片数据爬取之ImagesPipeline（图片二进制数据封装管道类）  案例zzpic</h2><p>基于该管道类，我们只需将解析到的图片url数据封装至item中，随后提交到该管道，管道会自动对item中的图片url发请求，并进行图片二进制数据的持久化存储<br>(1)反扒机制:<br>    图片懒加载:<br>    只有图片显示在可视化界面时，也就是能被用户看到时，这张图片才会被动态的显示出来，才能被获取url<br>       解决方法：<br>    解析数据时需要将解析的属性换成该网页设置的伪属性<br>(2)创建该管道类，继承自ImagesPineline类,并重写其三个方法<br>(3)往setting配置文件中添加  IMAGES_STORE &#x3D; ‘.imgs’  #指定图片存储目录<br>(4)执行完毕即可在目录中获取所有图片（需要下载PiLLow包）</p>
+<h2 id="六、中间件-middlewares-案例wypic"><a href="#六、中间件-middlewares-案例wypic" class="headerlink" title="六、中间件 middlewares   案例wypic"></a>六、中间件 middlewares   案例wypic</h2><p>作用: 批量拦截到整个工程中所有的请求和响应<br>    拦截请求:<br>        (1)UA伪装(单独、部分伪装，不像setting中是全局伪装)<br>            在下载中间件ZzpicDownloaderMiddleware的process_request方法中实现，代码如下:<br>            #创建UA伪装列表<br>            user_agent_list &#x3D; [<br>               ‘Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;114.0.0.0 Safari&#x2F;537.36’,<br>               ‘Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;114.0.0.0 Safari&#x2F;537.36 Edg&#x2F;114.0.1823.82’,<br>               ‘Mozilla&#x2F;5.0 (Windows NT 10.0; WOW64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;69.0.3947.100 Safari&#x2F;537.36’,<br>               ‘Mozilla&#x2F;5.0 (Windows NT 10.0; WOW64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;108.0.5359.125 Safari&#x2F;537.36 QIHU 360SE’]<br>            #拦截请求<br>            def process_request(self, request, spider):<br>                #UA伪装,通过random函数从user_agent_list中随机选择UA<br>                request.headers[‘User-Agent’] &#x3D; random.choice(self.user_agent_list)<br>                return None<br>        (2)代理IP<br>            在下载中间件ZzpicDownloaderMiddleware的process_exception方法中实现，代码如下:<br>            #创建ip列表<br>            proxy_http &#x3D; [<br>                ‘153.180.102.104:80’,<br>                ‘195.200.131.189:56055’<br>            ]<br>            proxy_https &#x3D; [<br>                ‘120.83.49.90:9000’,<br>                ‘95.189.112.214:35508’<br>            ]<br>            #拦截发生异常的响应（ip异常访问失败）<br>            def process_exception(self, request, exception, spider):<br>                #ip代理,修改ip使请求可以正常访问网址,调用request.meta中的proxy（代理）参数<br>                if request.url.split[‘:’][0] &#x3D;&#x3D; ‘http’: # 如果拦截到的是http请求，则从http列表中获取ip<br>                    request.meta[‘proxy’] &#x3D; ‘http:&#x2F;&#x2F;‘+random.choice(self.proxy_http)<br>                else:                                   # 是https请求，则从https列表获取ip<br>                      request.meta[‘proxy’] &#x3D; ‘https:&#x2F;&#x2F;‘+random.choice(self.proxy_https)<br>    拦截响应:<br>        (1)篡改响应数据、对象（获取网页动态加载的数据）<br>        拦截响应（通过中间件拦截响应对象并篡改，随后将新的请求对象返回)<br>        本案例是结合selenium来将响应对象改为可获取动态数据的selenium对象，代码如下:<br>        def process_response(self, request, response, spider):<br>            driver &#x3D; spider.driver #定义driver获取了在爬虫类中定义的浏览器对象<br>            # 挑选出指定的响应对象进行篡改  通过url指定request,通过request指定response<br>            if request.url in spider.model_urls:    # 如果请求的url是在爬虫文件中的model_url的url<br>                driver.get(request.url)             # 通过selenium的浏览器对象对该url重新发起请求<br>                page_text &#x3D; driver.page_source      # 获取浏览器当前页面源码的数据<br>                new_response &#x3D; HtmlResponse(url&#x3D;request.url,body&#x3D;page_text,encoding&#x3D;’utf-8’,request&#x3D;request)<br>                return new_response                 #返回新的响应对象<br>            else:<br>                return response                     #不满足则返回原来的响应对象</p>
+<h2 id="七、CrawlSpider-案例sunPro"><a href="#七、CrawlSpider-案例sunPro" class="headerlink" title="七、CrawlSpider   案例sunPro"></a>七、CrawlSpider   案例sunPro</h2><p>是Spider的一个子类，专用于全站数据爬取的方式<br>使用方法:<br>(1)创建一个工程                                 scrapy startproject projectName<br>(2)cd 工程名<br>(3)创建爬虫文件（基于CrawlSpider）                scrapy genspider -t crawl spiderName <a target="_blank" rel="noopener" href="http://www.xxx.com/">www.xxx.com</a><br>    规则解析器，从左至右含义如下<br>    1.链接提取器:利用正则表达式提取链接,&#x2F;d为匹配一个数字，&#x2F;d+为匹配多个数字<br>    2.callback回调，将链接提取器提取到的链接传给回调函数进行下一步操作<br>    3.follow改为true，可以将链接提取器继续作用到链接提取器所提取到的链接，即可以提取所有页的页码<br>    rules &#x3D; (Rule(LinkExtractor(allow&#x3D;r”index_\d+”), callback&#x3D;”parse_item”, follow&#x3D;True),)</p>
+<h2 id="八、增量式爬虫"><a href="#八、增量式爬虫" class="headerlink" title="八、增量式爬虫"></a>八、增量式爬虫</h2><p>监测网站数据的更新情况，只会爬取网站最新更新出来的数据<br>(1)指定一个起始url<br>(2)基于CrawlSpider获取其他页码的链接<br>(3)基于Rule将其他页码链接进行请求<br>(4)从每一个页码对应的页面源码中解析出每一个电影详情页的url并将爬取过的电影详情页的url存储<br>(5)核心! 检测电影详情页的url之前有没有被请求过<br>(6)对详情页的url发起请求，然后解析出电影的名称和简介<br>(7)进行持久化存储</p>
+<p><img src="/images/%E5%87%BA%E6%B0%B4%E8%8A%99%E8%93%89.jpg"></p>
+
+            
+        </div>
+        <footer class="article-footer">
+            <a data-url="http://example.com/2023/08/14/spider5/" data-id="cllaujeid000bk8bp3swg5i2u" data-title="爬虫笔记5——scrapy框架"
+               class="article-share-link">分享</a>
+            
+            
+            
+            
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrapy/" rel="tag">scrapy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </footer>
+    </div>
+    
+        
+    <nav id="article-nav" class="wow fadeInUp">
+        
+            <div class="article-nav-link-wrap article-nav-link-left">
+                
+                    <img data-src="/images/喜多证件照.jpg" data-sizes="auto" alt="SpringBoot框架学习"
+                         class="lazyload">
+                
+                <a href="/2024/01/30/Spring%20Boot/"></a>
+                <div class="article-nav-caption">前一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        SpringBoot框架学习
+                    
+                </h3>
+            </div>
+        
+        
+            <div class="article-nav-link-wrap article-nav-link-right">
+                
+                    <img data-src="/images/楚楚可怜.jpg" data-sizes="auto" alt="爬虫笔记4——selenium模块"
+                         class="lazyload">
+                
+                <a href="/2023/08/09/spider4/"></a>
+                <div class="article-nav-caption">后一篇</div>
+                <h3 class="article-nav-title">
+                    
+                        爬虫笔记4——selenium模块
+                    
+                </h3>
+            </div>
+        
+    </nav>
+
+
+    
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+                
+                    <aside id="sidebar">
+    <div class="sidebar-wrap wow fadeInRight">
+        <div class="sidebar-author">
+            <img data-src="/avatar//avatar.jpg" data-sizes="auto" alt="Boge_1024" class="lazyload">
+            <div class="sidebar-author-name">Boge_1024</div>
+            <div class="sidebar-description">呐，我说，你有在偷看罢？</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">12</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">2</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">11</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/Boge1024 itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-google>
+                    <a href=https://plus.google.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-twitter>
+                    <a href=https://twitter.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-facebook>
+                    <a href=https://www.facebook.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a></li></ul>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SSM/" style="font-size: 10px;">SSM</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/requests/" style="font-size: 10px;">requests</a> <a href="/tags/scrapy/" style="font-size: 10px;">scrapy</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/%E5%BC%82%E6%AD%A5/" style="font-size: 10px;">异步</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 20px;">爬虫</a>
+        </div>
+    </div>
+
+
+    
+        
+    <div class="widget-wrap wow fadeInRight">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a></li></ul>
+        </div>
+    </div>
+
+
+    
+
+</aside>
+
+                
+            </div>
+            <footer id="footer" class="wow fadeInUp">
+    <div style="width: 100%; overflow: hidden"><div class="footer-line"></div></div>
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            
+            <div>
+                <span class="icon-copyright"></span>
+                2023-2024
+                <span class="footer-info-sep"></span>
+                Boge_1024
+            </div>
+            
+                <div>
+                    基于&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;
+                    Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" target="_blank">Reimu</a>
+                </div>
+            
+            
+                <div>
+                    <span class="icon-brush"></span>
+                    62.8k
+                    &nbsp;|&nbsp;
+                    <span class="icon-coffee"></span>
+                    03:51
+                </div>
+            
+            
+                <div>
+                    <span class="icon-eye"></span>
+                    <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+                    &nbsp;|&nbsp;
+                    <span class="icon-user"></span>
+                    <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+                </div>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+        <nav id="mobile-nav">
+    <div class="sidebar-wrap">
+        <div class="sidebar-author">
+            <img data-src="/avatar//avatar.jpg" data-sizes="auto" alt="Boge_1024" class="lazyload">
+            <div class="sidebar-author-name">Boge_1024</div>
+            <div class="sidebar-description">呐，我说，你有在偷看罢？</div>
+        </div>
+        <div class="sidebar-state">
+            <div class="sidebar-state-article">
+                <div>文章</div>
+                <div class="sidebar-state-number">12</div>
+            </div>
+            <div class="sidebar-state-category">
+                <div>分类</div>
+                <div class="sidebar-state-number">2</div>
+            </div>
+            <div class="sidebar-state-tag">
+                <div>标签</div>
+                <div class="sidebar-state-number">11</div>
+            </div>
+        </div>
+        <div class="sidebar-social">
+            
+                <div class=icon-github>
+                    <a href=https://github.com/Boge1024 itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-google>
+                    <a href=https://plus.google.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-twitter>
+                    <a href=https://twitter.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+                <div class=icon-facebook>
+                    <a href=https://www.facebook.com/yourname itemprop="url" target="_blank"></a>
+                </div>
+            
+        </div>
+        <div class="sidebar-menu">
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">首页</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/archives"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">归档</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/about"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">关于</div>
+                </div>
+            
+                <div class="sidebar-menu-link-wrap">
+                    <a class="sidebar-menu-link-dummy" href="/friend"></a>
+                    <span class="sidebar-menu-icon"></span>
+                    <div class="sidebar-menu-link">友链</div>
+                </div>
+            
+        </div>
+    </div>
+</nav>
+
+
+        
+<script src="https://unpkg.com/jquery@3.7.0/dist/jquery.min.js"></script>
+
+
+<script src="https://unpkg.com/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://unpkg.com/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+    
+<script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+
+    
+<script src="https://unpkg.com/busuanzi@2.3.0/bsz.pure.mini.js"></script>
+
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="site-search">
+        <div class="algolia-popup popup">
+            <div class="algolia-search">
+                <span class="algolia-search-input-icon"></span>
+                <div class="algolia-search-input" id="algolia-search-input"></div>
+            </div>
+
+            <div class="algolia-results">
+                <div id="algolia-stats"></div>
+                <div id="algolia-hits"></div>
+                <div id="algolia-pagination" class="algolia-pagination"></div>
+            </div>
+
+            <span class="popup-btn-close"></span>
+        </div>
+    </div>
+    <!-- hexo injector body_end start -->
+<script src="/js/insertHighlight.js"></script>
+<!-- hexo injector body_end end --></body>
+    </html>
+
+
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+
+<!-- 雪花特效 -->
+<script type="text/javascript" src="\js\snow.js"></script>
+
+<!-- 高级看板娘 -->
+<script src="/live2d-widget/autoload.js"></script>
